@@ -54,11 +54,14 @@ int main(void)
 
 	while (1)
 	{
-		printf("tunishell> ");
+		if (isatty(STDIN_FILENO))
+			printf("notSoSimpleShell> ");
+
 		get = getline(&input, &size, stdin);
 		if (get == -1)
 		{
-			printf("\n");
+			if (isatty(STDIN_FILENO))
+				printf("\n");
 			break;
 		}
 
@@ -72,7 +75,9 @@ int main(void)
 		if (!args)
 			continue;
 
-		execute_command(args);
+		if (execute_command(args) == -1)
+			exit(127);
+
 		free_args(args);
 	}
 
