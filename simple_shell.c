@@ -7,33 +7,37 @@
  */
 char **parsing(char *input)
 {
-	char *command, *copy = malloc(strlen(input + 1));
+	char *command, *copy;
 	char **arr;
 	int i = 0, cap = 0;
 
+	/* count tokens */
+	copy = malloc(strlen(input) + 1);
+	if (!copy)
+		return (NULL);
 	strcpy(copy, input);
 	command = strtok(copy, " ");
-
 	while (command != NULL)
 	{
 		cap++;
 		command = strtok(NULL, " ");
 	}
 	free(copy);
-	command = strtok(input, " ");
-	arr = malloc(cap + 1 * sizeof(char *));
+	/* allocate array of pointers */
+	arr = malloc((cap + 1) * sizeof(char *));
 	if (!arr)
 	{
 		perror("malloc error");
 		return (NULL);
 	}
+	/* tokenize and duplicate string */
+	command = strtok(input, " ");
 	while (command != NULL)
 	{
-		arr[i++] = command;
+		arr[i++] = strdup(command);
 		command = strtok(NULL, " ");
 	}
-	if (arr != NULL)
-		arr[i] = NULL;
+	arr[i] = NULL;
 	return (arr);
 }
 
@@ -43,11 +47,10 @@ char **parsing(char *input)
  */
 int main(void)
 {
-	char *valid_path, *input = NULL;
-	char **arr = NULL;
+	char *input = NULL;
+	char **args = NULL;
 	ssize_t get;
 	size_t size = 0;
-	pid_t my_pid;
 
 	while (1)
 	{
@@ -58,26 +61,21 @@ int main(void)
 			printf("\n");
 			break;
 		}
+
 		input[strcspn(input, "\n")] = '\0';
 		if (strlen(input) == 0)
 			continue;
 		if (strcmp(input, "exit") == 0)
 			break;
-		arr = parsing(input);
-		if (!arr)
+
+		args = parsing(input);
+		if (!args)
 			continue;
-		valid_path = get_path(arr[0]);
-		if (valid_path == NULL)
-			continue;
-		my_pid = fork();
-		if (my_pid == 0)
-			execve(valid_path, arr, environ);
-		else if (my_pid > 0)
-			waitpid(my_pid, NULL, 0);
-		else
-			perror("fork error");
-		free(arr);
+
+		execute_command(args);
+		free_args(args);
 	}
+
 	free(input);
 	return (0);
 }

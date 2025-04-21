@@ -17,7 +17,7 @@ char *get_path(char *command)
 	{
 		if (access(command, X_OK) == 0)
 		{
-			copy = malloc(strlen(command + 1));
+			copy = malloc(strlen(command) + 1);
 			if (copy)
 				strcpy(copy, command);
 			return (copy);
@@ -34,6 +34,7 @@ char *get_path(char *command)
 		strcpy(path, search_path[i]);
 		strcat(path, "/");
 		strcat(path, command);
+
 		if (access(path, X_OK) == 0)
 			return (path);
 		free(path);
