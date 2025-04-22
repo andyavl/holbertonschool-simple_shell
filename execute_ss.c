@@ -3,9 +3,11 @@
 /**
  * execute_command - forks and executes a command
  * @args: argument array
+ * @file_name: file that executes the shell
+ * @line_number: some number
  * Return: 0 on success, -1 on failure
  */
-int execute_command(char **args)
+int execute_command(char **args, char *file_name, int line_number)
 {
 	char *valid_path;
 	int status;
@@ -14,7 +16,7 @@ int execute_command(char **args)
 	valid_path = get_path(args[0]);
 	if (!valid_path)
 	{
-		fprintf(stderr, "%s: command not found\n", args[0]);
+		fprintf(stderr, "%s: %d: %s: not found\n", file_name, line_number, args[0]);
 		return (127);
 	}
 	my_pid = fork();

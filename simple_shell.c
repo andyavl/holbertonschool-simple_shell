@@ -85,9 +85,11 @@ char **parsing(char *input)
 
 /**
  * main - Simple UNIX command line interpreter
+ * @argc: amount of arguments
+ * @argv: array of arguments
  * Return: 0
  */
-int main(void)
+int main(int argc, char **argv)
 {
 	char *input = NULL;
 	char **args = NULL;
@@ -115,7 +117,7 @@ int main(void)
 		args = parsing(input);
 		if (!args)
 			continue;
-		if (execute_command(args) == 127)
+		if (execute_command(args, argv[0], argc) == 127)
 			exit(127);
 		free_args(args);
 	}
