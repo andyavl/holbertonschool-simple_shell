@@ -105,18 +105,18 @@ int main(void)
 			break;
 		}
 		input[strcspn(input, "\n")] = '\0';
-		if (is_spaces(input))
-			continue;
-		if (strlen(input) == 0)
+
+		if (is_spaces(input) || strlen(input) == 0)
 			continue;
 		if (strcmp(input, "exit") == 0)
 			break;
+
 		remove_tabs(input);
 		args = parsing(input);
 		if (!args)
 			continue;
-		if (execute_command(args) == -1)
-			continue;
+		if (execute_command(args) == 127)
+			exit(127);
 		free_args(args);
 	}
 	free(input);
