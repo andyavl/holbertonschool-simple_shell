@@ -1,6 +1,27 @@
 #include "sshell.h"
 
-const char *search_path[] = {"/bin", "/usr/bin", NULL};
+/**
+ * _getenv - searches for key in the extern environ
+ * @path: the key to read
+ * Return: key value or NULL if not found
+ */
+char *_getenv(const char *path)
+{
+	int i;
+	size_t len;
+
+	if (!path || !environ)
+		return (NULL);
+
+	len = strlen(path);
+	for (i = 0; environ[i]; i++)
+	{
+		if (strncmp(environ[i], path, len) == 0 && environ[i][len] == '=')
+			return (environ[i] + len + 1);
+	}
+
+	return (NULL);
+}
 
 /**
  * get_path - checks for the command and its path
@@ -9,36 +30,42 @@ const char *search_path[] = {"/bin", "/usr/bin", NULL};
  */
 char *get_path(char *command)
 {
-	size_t p;
-	int i = 0;
-	char *copy, *path;
+	size_t len;
+	char *path_env, *path_dup, *dir, *full_path;
 
+	if (!command)
+		return (NULL);
 	if (strchr(command, '/') != NULL)
 	{
 		if (access(command, X_OK) == 0)
-		{
-			copy = malloc(strlen(command) + 1);
-			if (copy)
-				strcpy(copy, command);
-			return (copy);
-		}
+			return (strdup(command));
 		return (NULL);
 	}
-	while (search_path[i] != NULL)
+	path_env = _getenv("PATH");
+	if (!path_env || *path_env == '\0')
+		return (NULL);
+	path_dup = strdup(path_env);
+	if (!path_dup)
+		return (NULL);
+	dir = strtok(path_dup, ":");
+	while (dir != NULL)
 	{
-		p = strlen(search_path[i]) + strlen(command) + 2;
-		path = malloc(p);
-		if (!path)
+		len = strlen(dir) + strlen(command) + 2;
+		full_path = malloc(len);
+		if (!full_path)
+		{
+			free(path_dup);
 			return (NULL);
-
-		strcpy(path, search_path[i]);
-		strcat(path, "/");
-		strcat(path, command);
-
-		if (access(path, X_OK) == 0)
-			return (path);
-		free(path);
-		i++;
+		}
+		sprintf(full_path, "%s/%s", dir, command);
+		if (access(full_path, X_OK) == 0)
+		{
+			free(path_dup);
+			return (full_path);
+		}
+		free(full_path);
+		dir = strtok(NULL, ":");
 	}
+	free(path_dup);
 	return (NULL);
 }
