@@ -1,6 +1,32 @@
 #include "sshell.h"
 
 /**
+ * handle_env - handles the env built-in command
+ * @args: the parsed command arguments
+ * @shell_name: name of the shell executable (argv[0])
+ * @line_number: the current input line number (argc)
+ * Return: 1 if env was handled, 0 otherwise
+ */
+int _env_builtin(char **args, char *shell_name, int line_number)
+{
+	int i;
+
+	if (strcmp(args[0], "env") == 0)
+	{
+		if (args[1])
+		{
+			fprintf(stderr, "%s: %d: %s: No such file or directory\n",
+				shell_name, line_number, args[1]);
+			return (127);
+		}
+		for (i = 0; environ[i]; i++)
+			printf("%s\n", environ[i]);
+		return (0);
+	}
+	return (-1); /* Not an env command */
+}
+
+/**
  * _getenv - searches for key in the extern environ
  * @path: the key to read
  * Return: key value or NULL if not found

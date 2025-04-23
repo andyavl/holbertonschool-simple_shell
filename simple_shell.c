@@ -119,7 +119,11 @@ int main(int argc, char **argv)
 		args = parsing(input);
 		if (!args)
 			continue;
-
+		if (strcmp(args[0], "env") == 0)
+		{
+			status = _env_builtin(args, argv[0], argc);
+			continue;
+		}
 		status = execute_command(args, argv[0], argc);
 	}
 	free_args(args);

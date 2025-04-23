@@ -17,5 +17,5 @@ char *get_path(char *command);
 char *_getenv(const char *path);
 int execute_command(char **args, char *file_name, int line_number);
 void free_args(char **args);
-
+int _env_builtin(char **args, char *shell_name, int line_number);
 #endif
