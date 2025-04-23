@@ -1,0 +1,65 @@
+.TH SSH 1 "October 2023" "1.0" "Simple Shell Manual"
+.SH NAME
+sshell \- a simple UNIX command line interpreter
+
+.SH SYNOPSIS
+.B sshell
+.RI [ options ]
+.RI [ command ]
+
+.SH DESCRIPTION
+.B sshellis a simple shell program that provides a command line interface to execute user commands in a UNIX-like environment. It supports basic functionalities such as parsing user input, handling spaces and tabs, and executing commands.
+
+.SH AUTHORWilliam Lugo, Andy A. Vega
+
+.SH OPTIONS
+.TP
+.B -h, --help
+Display help information about the shell.
+
+.SH COMMANDS
+.TP
+.B exit
+Exit the shell.
+.TP
+.B env
+Display the current environment variables.
+
+.SH INPUT
+The shell reads input from the user, processes it, and executes the specified command. If the input is empty or contains only spaces, it will prompt the user again. The shell supports command execution and can handle multiple commands separated by spaces.
+
+.SH FUNCTIONS
+.TP
+.B _prompt
+Prints the shell prompt ("notSoSimpleShell> ") if the shell is running interactively.
+
+.TP
+.B is_spaces
+Checks if the input string contains only spaces or tabs.
+
+.TP
+.B remove_tabs
+Removes tab characters from the user input.
+
+.TP
+.B parsing
+Parses the user input into an array of command arguments.
+
+.TP
+.B execute_command
+Executes the specified command with the given arguments.
+
+.SH EXAMPLES
+To start the shell, simply run:
+.B ./sshell
+
+Type commands like:
+.B ls
+.B env
+.B exit
+
+to interact with the shell.
+
+.SH SEE ALSO
+.B bash(1),
+	.B sh(1)
