@@ -95,6 +95,7 @@ int main(int argc, char **argv)
 	char **args = NULL;
 	ssize_t get;
 	size_t size = 0;
+	int status = 0;
 
 	while (1)
 	{
@@ -107,20 +108,21 @@ int main(int argc, char **argv)
 			break;
 		}
 		input[strcspn(input, "\n")] = '\0';
-
 		if (is_spaces(input) || strlen(input) == 0)
 			continue;
 		if (strcmp(input, "exit") == 0)
 			break;
-
 		remove_tabs(input);
+
+		if (args)
+			free_args(args);
 		args = parsing(input);
 		if (!args)
 			continue;
-		if (execute_command(args, argv[0], argc) == 127)
-			exit(127);
-		free_args(args);
+
+		status = execute_command(args, argv[0], argc);
 	}
+	free_args(args);
 	free(input);
-	return (0);
+	return (status);
 }

@@ -10,7 +10,7 @@
 int execute_command(char **args, char *file_name, int line_number)
 {
 	char *valid_path;
-	int status;
+	int wstatus;
 	pid_t my_pid;
 
 	valid_path = get_path(args[0]);
@@ -24,22 +24,25 @@ int execute_command(char **args, char *file_name, int line_number)
 	{
 		execve(valid_path, args, environ);
 		perror("execve failed");
+		free(valid_path);
 		exit(EXIT_FAILURE);
 	}
 	else if (my_pid > 0)
 	{
-		waitpid(my_pid, &status, 0);
+		waitpid(my_pid, &wstatus, 0);
 		free(valid_path);
-		return (WEXITSTATUS(status));
+
+		if (WIFEXITED(wstatus))
+			return (WEXITSTATUS(wstatus));
+		else
+			return (1);
 	}
 	else
 	{
 		perror("fork error");
 		free(valid_path);
-		return (-1);
+		return (1);
 	}
-	free(valid_path);
-	return (0);
 }
 
 /**

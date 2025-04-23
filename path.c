@@ -35,12 +35,14 @@ char *get_path(char *command)
 
 	if (!command)
 		return (NULL);
+
 	if (strchr(command, '/') != NULL)
 	{
 		if (access(command, X_OK) == 0)
 			return (strdup(command));
 		return (NULL);
 	}
+
 	path_env = _getenv("PATH");
 	if (!path_env || *path_env == '\0')
 		return (NULL);
