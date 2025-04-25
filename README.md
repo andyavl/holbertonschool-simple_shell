@@ -10,9 +10,9 @@ It was developed as part of the Holberton School curriculum in Ponce, PR.
 
 - [Usage](#usage)
 
-- [Supported Features](#supported features:)
+- [Supported Features](#supportedfeatures:)
 
-- [Example Usage](#example usage)
+- [Example Usage](#exampleusage)
 
 - [Authors](#authors)
 
@@ -37,7 +37,7 @@ gcc -Wall -Wextra -Werror -pedantic -std=gnu89 *.c -o hsh
 
 After compiling, run the shell using:
 
-./hsh
+`./hsh`
 
 ## Supported features:
 
@@ -55,9 +55,9 @@ After compiling, run the shell using:
 
 ## Example usage
 
-notSoSimpleShell> ls -l
-notSoSimpleShell> env
-notSoSimpleShell> exit
+notSoSimpleShell> ls -l<br/>
+notSoSimpleShell> env<br/>
+notSoSimpleShell> exit<br/>
 
 ## Authors:
 
