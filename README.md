@@ -24,9 +24,9 @@ It was developed as part of the Holberton School curriculum in Ponce, PR.
 
 To install this custom shell, copy the following files into your project directory:
 
-- `main.c`
-- `utils.c`
-- `builtin.c`
+- `execute_ss.c`
+- `path.c`
+- `simple_shell.c`
 - `sshell.h`
 
 Then compile the program using the command below:
