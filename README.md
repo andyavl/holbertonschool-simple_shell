@@ -10,9 +10,9 @@ It was developed as part of the Holberton School curriculum in Ponce, PR.
 
 - [Usage](#usage)
 
-- [Supported Features](#supportedfeatures)
+- [Supported Features](#supported%20features)
 
-- [Example Usage](#exampleusage)
+- [Example Usage](#example%20usage)
 
 - [Authors](#authors)
 
@@ -67,7 +67,7 @@ notSoSimpleShell> exit<br/>
 
 ## Manual
 
-You can view the man page for the custom `shell` function in the `man` directory or view it directly [here]().
+You can view the man page for the custom `shell` function in the `man` directory or view it directly [here](https://github.com/andyavl/holbertonschool-simple_shell/blob/main/man_1_simple_shell).
 
 ## License
 
