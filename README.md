@@ -10,7 +10,7 @@ It was developed as part of the Holberton School curriculum in Ponce, PR.
 
 - [Usage](#usage)
 
-- [Supported Features](#supportedfeatures:)
+- [Supported Features](#supportedfeatures)
 
 - [Example Usage](#exampleusage)
 
